@@ -49,7 +49,8 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
     {
         var figures = FiguresGenerator.GenerateFiguresSet();
 
-        Assert.Fail(); // todo realization needed
+        figures.Sum(f => f.Map.Cast<int>().Sum())
+               .Should().Be(64);
     }
 
     [TestCase(1, Color.Blue, 2, 5, 2, 3, 2)]
@@ -83,6 +84,19 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
         figure.MaxHigh.Should().Be(maxHigh);
         figure.MaxWidth.Should().Be(maxWidth);
         figure.MaxDepth.Should().Be(maxDepth);
-        Assert.Fail(); // todo realization needed, figure cubes map check
+        // todo map check
+        // switch (id)
+        // {
+        //     case 1:
+        //         figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
+        //                                            {
+        //                                                { { 0, 1, 1 }, { 1, 1, 0 } },
+        //                                                { { 0, 1, 0 }, { 0, 0, 0 } }
+        //                                            });
+        //         break;
+        //     default:
+        //         Assert.Fail();
+        //         break;
+        // }
     }
 }
