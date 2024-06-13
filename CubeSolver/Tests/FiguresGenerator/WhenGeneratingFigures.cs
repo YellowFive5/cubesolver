@@ -49,7 +49,7 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
     {
         var figures = FiguresGenerator.GenerateFiguresSet();
 
-        figures.Sum(f => f.Map.Cast<int>().Sum())
+        figures.Sum(f => f.InitialMap3x3.Cast<int>().Sum())
                .Should().Be(64);
     }
 
@@ -88,92 +88,108 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
         switch (id)
         {
             case 1:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 0, 1, 1 }, { 1, 1, 0 } },
-                                                       { { 0, 1, 0 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 2:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 1, 1, 1 }, { 0, 0, 1 } },
-                                                       { { 0, 0, 1 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 3:
-                figure.Map.Should().BeEquivalentTo(new int[1, 3, 3]
-                                                   {
-                                                       { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } },
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 4:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 0, 1, 1 }, { 1, 1, 0 } },
-                                                       { { 0, 0, 1 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 5:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 1, 1, 1 }, { 1, 0, 0 } },
-                                                       { { 0, 0, 1 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 6:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 2]
-                                                   {
-                                                       { { 1, 1 }, { 1, 0 } },
-                                                       { { 0, 0 }, { 1, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 7:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 1, 1, 1 }, { 0, 1, 0 } },
-                                                       { { 0, 1, 0 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 8:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 1, 1, 1 }, { 0, 0, 1 } },
-                                                       { { 0, 0, 0 }, { 0, 0, 1 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 9:
-                figure.Map.Should().BeEquivalentTo(new int[1, 3, 3]
-                                                   {
-                                                       { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 10:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 0, 1, 0 }, { 1, 1, 0 } },
-                                                       { { 0, 1, 1 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 1, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 11:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 1, 1, 1 }, { 1, 0, 0 } },
-                                                       { { 0, 1, 0 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 12:
-                figure.Map.Should().BeEquivalentTo(new int[2, 2, 3]
-                                                   {
-                                                       { { 0, 1, 0 }, { 1, 1, 1 } },
-                                                       { { 0, 1, 0 }, { 0, 0, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } },
+                                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             case 13:
-                figure.Map.Should().BeEquivalentTo(new int[1, 3, 3]
-                                                   {
-                                                       { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } }
-                                                   });
+                figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
+                                                             {
+                                                                 { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                             });
                 break;
             default:
                 Assert.Fail();
