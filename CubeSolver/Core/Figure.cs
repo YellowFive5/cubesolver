@@ -1,16 +1,20 @@
 ﻿namespace Core;
 
-public enum Rotate
+public enum Axis
 {
-    X90,
-    X180,
-    X270,
-    Y90,
-    Y180,
-    Y270,
-    Z90,
-    Z180,
-    Z270,
+    X,
+    Y,
+    Z
+}
+
+public enum Angle
+{
+    _90cvp,
+    _180cvp,
+    _270cvp,
+    _90ccvn,
+    _180ccvn,
+    _270ccvn
 }
 
 public class Figure
@@ -24,4 +28,8 @@ public class Figure
     public int MaxDepth { get; init; }
     public int[,,] InitialMap3x3 { get; init; }
     public int[,,] ActualMap3x3 { get; set; }
+
+    public void Rotate(Axis rotationAxis, Angle rotationAngle)
+    {
+    }
 }
