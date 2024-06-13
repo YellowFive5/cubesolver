@@ -31,5 +31,62 @@ public class Figure
 
     public void Rotate(Axis rotationAxis, Angle rotationAngle)
     {
+        switch (rotationAngle)
+        {
+            case Angle._90cvp:
+                switch (rotationAxis)
+                {
+                    case Axis.X:
+                        // todo realization
+                        break;
+                    case Axis.Y:
+                        // todo realization
+                        break;
+                    case Axis.Z:
+                        // todo realization
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null);
+                }
+
+                break;
+            case Angle._90ccvn:
+                switch (rotationAxis)
+                {
+                    case Axis.X:
+                        // todo realization
+                        break;
+                    case Axis.Y:
+                        // todo realization
+                        break;
+                    case Axis.Z:
+                        // todo realization
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null);
+                }
+
+                break;
+            case Angle._180cvp:
+                Rotate(rotationAxis, Angle._90cvp);
+                Rotate(rotationAxis, Angle._90cvp);
+                break;
+            case Angle._270cvp:
+                Rotate(rotationAxis, Angle._90cvp);
+                Rotate(rotationAxis, Angle._90cvp);
+                Rotate(rotationAxis, Angle._90cvp);
+                break;
+            case Angle._180ccvn:
+                Rotate(rotationAxis, Angle._90ccvn);
+                Rotate(rotationAxis, Angle._90ccvn);
+                break;
+            case Angle._270ccvn:
+                Rotate(rotationAxis, Angle._90ccvn);
+                Rotate(rotationAxis, Angle._90ccvn);
+                Rotate(rotationAxis, Angle._90ccvn);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
+        }
     }
 }
