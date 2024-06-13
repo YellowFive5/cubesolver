@@ -23,4 +23,5 @@ public class Figure
     public int MaxWidth { get; init; }
     public int MaxDepth { get; init; }
     public int[,,] InitialMap3x3 { get; init; }
+    public int[,,] ActualMap3x3 { get; set; }
 }

@@ -195,5 +195,15 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
                 Assert.Fail();
                 break;
         }
+
+        figure.ActualMap3x3.Should().BeEquivalentTo(figure.InitialMap3x3);
+    }
+
+    [Test]
+    public void ExceptionThrowsWhenFigureIdIsIncorrect()
+    {
+        Action act = () => { FiguresGenerator.GenerateFigureById(42); };
+
+        act.Should().Throw<Exception>();
     }
 }
