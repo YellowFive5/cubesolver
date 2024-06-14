@@ -38,7 +38,17 @@ public class Figure
                 switch (rotationAxis)
                 {
                     case Axis.X:
-                        // todo realization
+                        for (var k = 0; k < 3; k++)
+                        {
+                            for (var j = 0; j < 3; j++)
+                            {
+                                for (var i = 0; i < 3; i++)
+                                {
+                                    ActualMap3x3[j, i, k] = tempMapCopy[2 - i, j, k];
+                                }
+                            }
+                        }
+
                         break;
                     case Axis.Y:
                         // todo realization
