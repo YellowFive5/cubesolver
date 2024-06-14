@@ -84,7 +84,6 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
         figure.MaxHigh.Should().Be(maxHigh);
         figure.MaxWidth.Should().Be(maxWidth);
         figure.MaxDepth.Should().Be(maxDepth);
-        // todo map check
         switch (id)
         {
             case 1:

@@ -64,7 +64,17 @@ public class Figure
 
                         break;
                     case Axis.Z:
-                        // todo realization
+                        for (var k = 0; k < 3; k++)
+                        {
+                            for (var j = 0; j < 3; j++)
+                            {
+                                for (var i = 0; i < 3; i++)
+                                {
+                                    ActualMap3x3[j, k, i] = tempMapCopy[2 - i, k, j];
+                                }
+                            }
+                        }
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null);
@@ -101,7 +111,17 @@ public class Figure
 
                         break;
                     case Axis.Z:
-                        // todo realization
+                        for (var k = 0; k < 3; k++)
+                        {
+                            for (var j = 0; j < 3; j++)
+                            {
+                                for (var i = 0; i < 3; i++)
+                                {
+                                    ActualMap3x3[j, k, i] = tempMapCopy[i, k, 2 - j];
+                                }
+                            }
+                        }
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null);
