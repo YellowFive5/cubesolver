@@ -31,100 +31,33 @@ public class Figure
 
     public void Rotate(Axis rotationAxis, Angle rotationAngle)
     {
-        var tempMapCopy = ActualMap3x3.Clone() as int[,,];
         switch (rotationAngle)
         {
             case Angle._90cvp:
-                switch (rotationAxis)
-                {
-                    case Axis.X:
-                        for (var k = 0; k < 3; k++)
-                        {
-                            for (var j = 0; j < 3; j++)
-                            {
-                                for (var i = 0; i < 3; i++)
-                                {
-                                    ActualMap3x3[j, i, k] = tempMapCopy[2 - i, j, k];
-                                }
-                            }
-                        }
-
-                        break;
-                    case Axis.Y:
-                        for (var k = 0; k < 3; k++)
-                        {
-                            for (var j = 0; j < 3; j++)
-                            {
-                                for (var i = 0; i < 3; i++)
-                                {
-                                    ActualMap3x3[j, k, i] = tempMapCopy[j, 2 - i, k];
-                                }
-                            }
-                        }
-
-                        break;
-                    case Axis.Z:
-                        for (var k = 0; k < 3; k++)
-                        {
-                            for (var j = 0; j < 3; j++)
-                            {
-                                for (var i = 0; i < 3; i++)
-                                {
-                                    ActualMap3x3[j, k, i] = tempMapCopy[2 - i, k, j];
-                                }
-                            }
-                        }
-
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null);
-                }
-
-                break;
             case Angle._90ccvn:
-                switch (rotationAxis)
+                var tempMapCopy = ActualMap3x3.Clone() as int[,,];
+                for (var k = 0; k < 3; k++)
                 {
-                    case Axis.X:
-                        for (var k = 0; k < 3; k++)
+                    for (var j = 0; j < 3; j++)
+                    {
+                        for (var i = 0; i < 3; i++)
                         {
-                            for (var j = 0; j < 3; j++)
+                            var swap = rotationAxis switch
                             {
-                                for (var i = 0; i < 3; i++)
-                                {
-                                    ActualMap3x3[i, j, k] = tempMapCopy[j, 2 - i, k];
-                                }
-                            }
+                                Axis.X => rotationAngle is Angle._90cvp
+                                              ? (Action)(() => ActualMap3x3[j, i, k] = tempMapCopy[2 - i, j, k])
+                                              : (Action)(() => ActualMap3x3[i, j, k] = tempMapCopy[j, 2 - i, k]),
+                                Axis.Y => rotationAngle is Angle._90cvp
+                                              ? (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[j, 2 - i, k])
+                                              : (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[j, i, 2 - k]),
+                                Axis.Z => rotationAngle is Angle._90cvp
+                                              ? (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[2 - i, k, j])
+                                              : (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[i, k, 2 - j]),
+                                _ => throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null)
+                            };
+                            swap.Invoke();
                         }
-
-                        break;
-                    case Axis.Y:
-                        for (var k = 0; k < 3; k++)
-                        {
-                            for (var j = 0; j < 3; j++)
-                            {
-                                for (var i = 0; i < 3; i++)
-                                {
-                                    ActualMap3x3[j, k, i] = tempMapCopy[j, i, 2 - k];
-                                }
-                            }
-                        }
-
-                        break;
-                    case Axis.Z:
-                        for (var k = 0; k < 3; k++)
-                        {
-                            for (var j = 0; j < 3; j++)
-                            {
-                                for (var i = 0; i < 3; i++)
-                                {
-                                    ActualMap3x3[j, k, i] = tempMapCopy[i, k, 2 - j];
-                                }
-                            }
-                        }
-
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null);
+                    }
                 }
 
                 break;
