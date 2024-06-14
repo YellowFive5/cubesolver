@@ -51,7 +51,17 @@ public class Figure
 
                         break;
                     case Axis.Y:
-                        // todo realization
+                        for (var k = 0; k < 3; k++)
+                        {
+                            for (var j = 0; j < 3; j++)
+                            {
+                                for (var i = 0; i < 3; i++)
+                                {
+                                    ActualMap3x3[j, k, i] = tempMapCopy[j, 2 - i, k];
+                                }
+                            }
+                        }
+
                         break;
                     case Axis.Z:
                         // todo realization
@@ -78,7 +88,17 @@ public class Figure
 
                         break;
                     case Axis.Y:
-                        // todo realization
+                        for (var k = 0; k < 3; k++)
+                        {
+                            for (var j = 0; j < 3; j++)
+                            {
+                                for (var i = 0; i < 3; i++)
+                                {
+                                    ActualMap3x3[j, k, i] = tempMapCopy[j, i, 2 - k];
+                                }
+                            }
+                        }
+
                         break;
                     case Axis.Z:
                         // todo realization
