@@ -31,13 +31,45 @@ public class Figure
 
     public void Rotate(Axis rotationAxis, Angle rotationAngle)
     {
+        var tempMapCopy = ActualMap3x3.Clone() as int[,,];
         switch (rotationAngle)
         {
             case Angle._90cvp:
                 switch (rotationAxis)
                 {
                     case Axis.X:
-                        // todo realization
+                        ActualMap3x3[0, 2, 0] = tempMapCopy[0, 0, 0];
+                        ActualMap3x3[0, 2, 1] = tempMapCopy[0, 0, 1];
+                        ActualMap3x3[0, 2, 2] = tempMapCopy[0, 0, 2];
+
+                        ActualMap3x3[0, 1, 0] = tempMapCopy[1, 0, 0];
+                        ActualMap3x3[0, 1, 1] = tempMapCopy[1, 0, 1];
+                        ActualMap3x3[0, 1, 2] = tempMapCopy[1, 0, 2];
+
+                        ActualMap3x3[0, 0, 0] = tempMapCopy[2, 0, 0];
+                        ActualMap3x3[0, 0, 1] = tempMapCopy[2, 0, 1];
+                        ActualMap3x3[0, 0, 2] = tempMapCopy[2, 0, 2];
+
+                        ActualMap3x3[2, 2, 0] = tempMapCopy[0, 2, 0];
+                        ActualMap3x3[2, 2, 1] = tempMapCopy[0, 2, 1];
+                        ActualMap3x3[2, 2, 2] = tempMapCopy[0, 2, 2];
+
+                        ActualMap3x3[2, 1, 0] = tempMapCopy[1, 2, 0];
+                        ActualMap3x3[2, 1, 1] = tempMapCopy[1, 2, 1];
+                        ActualMap3x3[2, 1, 2] = tempMapCopy[1, 2, 2];
+
+                        ActualMap3x3[2, 0, 0] = tempMapCopy[2, 2, 0];
+                        ActualMap3x3[2, 0, 1] = tempMapCopy[2, 2, 1];
+                        ActualMap3x3[2, 0, 2] = tempMapCopy[2, 2, 2];
+
+                        ActualMap3x3[1, 0, 0] = tempMapCopy[2, 1, 0];
+                        ActualMap3x3[1, 0, 1] = tempMapCopy[2, 1, 1];
+                        ActualMap3x3[1, 0, 2] = tempMapCopy[2, 1, 2];
+
+                        ActualMap3x3[1, 2, 0] = tempMapCopy[0, 1, 0];
+                        ActualMap3x3[1, 2, 1] = tempMapCopy[0, 1, 1];
+                        ActualMap3x3[1, 2, 2] = tempMapCopy[0, 1, 2];
+
                         break;
                     case Axis.Y:
                         // todo realization

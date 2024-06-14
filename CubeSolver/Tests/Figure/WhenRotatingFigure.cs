@@ -57,7 +57,12 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Assert.Fail(); // todo
+                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     case Angle._180cvp:
                         Assert.Fail(); // todo
@@ -83,7 +88,12 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Assert.Fail(); // todo
+                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 1 }, { 0, 0, 1 }, { 0, 1, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     case Angle._180cvp:
                         Assert.Fail(); // todo
@@ -92,7 +102,12 @@ public class WhenRotatingFigure : FigureTestBase
                         Assert.Fail(); // todo
                         break;
                     case Angle._90ccvn:
-                        Assert.Fail(); // todo
+                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 1, 1, 0 }, { 1, 0, 0 }, { 1, 0, 0 } },
+                                                                          { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     case Angle._180ccvn:
                         Assert.Fail(); // todo
@@ -109,7 +124,12 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Assert.Fail(); // todo
+                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     case Angle._180cvp:
                         Assert.Fail(); // todo
