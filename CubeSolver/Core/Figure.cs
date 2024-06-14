@@ -38,38 +38,7 @@ public class Figure
                 switch (rotationAxis)
                 {
                     case Axis.X:
-                        ActualMap3x3[0, 2, 0] = tempMapCopy[0, 0, 0];
-                        ActualMap3x3[0, 2, 1] = tempMapCopy[0, 0, 1];
-                        ActualMap3x3[0, 2, 2] = tempMapCopy[0, 0, 2];
-
-                        ActualMap3x3[0, 1, 0] = tempMapCopy[1, 0, 0];
-                        ActualMap3x3[0, 1, 1] = tempMapCopy[1, 0, 1];
-                        ActualMap3x3[0, 1, 2] = tempMapCopy[1, 0, 2];
-
-                        ActualMap3x3[0, 0, 0] = tempMapCopy[2, 0, 0];
-                        ActualMap3x3[0, 0, 1] = tempMapCopy[2, 0, 1];
-                        ActualMap3x3[0, 0, 2] = tempMapCopy[2, 0, 2];
-
-                        ActualMap3x3[2, 2, 0] = tempMapCopy[0, 2, 0];
-                        ActualMap3x3[2, 2, 1] = tempMapCopy[0, 2, 1];
-                        ActualMap3x3[2, 2, 2] = tempMapCopy[0, 2, 2];
-
-                        ActualMap3x3[2, 1, 0] = tempMapCopy[1, 2, 0];
-                        ActualMap3x3[2, 1, 1] = tempMapCopy[1, 2, 1];
-                        ActualMap3x3[2, 1, 2] = tempMapCopy[1, 2, 2];
-
-                        ActualMap3x3[2, 0, 0] = tempMapCopy[2, 2, 0];
-                        ActualMap3x3[2, 0, 1] = tempMapCopy[2, 2, 1];
-                        ActualMap3x3[2, 0, 2] = tempMapCopy[2, 2, 2];
-
-                        ActualMap3x3[1, 0, 0] = tempMapCopy[2, 1, 0];
-                        ActualMap3x3[1, 0, 1] = tempMapCopy[2, 1, 1];
-                        ActualMap3x3[1, 0, 2] = tempMapCopy[2, 1, 2];
-
-                        ActualMap3x3[1, 2, 0] = tempMapCopy[0, 1, 0];
-                        ActualMap3x3[1, 2, 1] = tempMapCopy[0, 1, 1];
-                        ActualMap3x3[1, 2, 2] = tempMapCopy[0, 1, 2];
-
+                        // todo realization
                         break;
                     case Axis.Y:
                         // todo realization
@@ -86,7 +55,17 @@ public class Figure
                 switch (rotationAxis)
                 {
                     case Axis.X:
-                        // todo realization
+                        for (var k = 0; k < 3; k++)
+                        {
+                            for (var j = 0; j < 3; j++)
+                            {
+                                for (var i = 0; i < 3; i++)
+                                {
+                                    ActualMap3x3[i, j, k] = tempMapCopy[j, 2 - i, k];
+                                }
+                            }
+                        }
+
                         break;
                     case Axis.Y:
                         // todo realization
