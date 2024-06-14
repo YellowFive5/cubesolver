@@ -106,8 +106,8 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
             case 3:
                 figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
                                                              {
-                                                                 { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } },
                                                                  { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } },
                                                                  { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
                                                              });
                 break;
@@ -154,8 +154,8 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
             case 9:
                 figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
                                                              {
-                                                                 { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } },
                                                                  { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } },
                                                                  { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
                                                              });
                 break;
@@ -186,8 +186,8 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
             case 13:
                 figure.InitialMap3x3.Should().BeEquivalentTo(new[,,]
                                                              {
-                                                                 { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } },
                                                                  { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                 { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } },
                                                                  { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
                                                              });
                 break;

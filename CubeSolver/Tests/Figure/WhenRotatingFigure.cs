@@ -79,10 +79,20 @@ public class WhenRotatingFigure : FigureTestBase
                                                                       });
                         break;
                     case Angle._180ccvn:
-                        Assert.Fail(); // todo
+                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } },
+                                                                      });
                         break;
                     case Angle._270ccvn:
-                        Assert.Fail(); // todo
+                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -205,13 +215,28 @@ public class WhenRotatingFigure : FigureTestBase
                         Assert.Fail(); // todo
                         break;
                     case Angle._90ccvn:
-                        Assert.Fail(); // todo
+                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 1, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 1, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     case Angle._180ccvn:
-                        Assert.Fail(); // todo
+                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
+                                                                          { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } },
+                                                                      });
                         break;
                     case Angle._270ccvn:
-                        Assert.Fail(); // todo
+                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                      {
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 1, 0 } },
+                                                                          { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 0, 0 } },
+                                                                          { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                      });
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -297,8 +322,8 @@ public class WhenRotatingFigure : FigureTestBase
     {
         Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[,,]
                                                        {
-                                                           { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } },
                                                            { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                           { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } },
                                                            { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
                                                        });
 
@@ -319,13 +344,28 @@ public class WhenRotatingFigure : FigureTestBase
                         Assert.Fail(); // todo
                         break;
                     case Angle._90ccvn:
-                        Assert.Fail(); // todo
+                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                       {
+                                                                           { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } },
+                                                                           { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } },
+                                                                           { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } },
+                                                                       });
                         break;
                     case Angle._180ccvn:
-                        Assert.Fail(); // todo
+                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                       {
+                                                                           { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                           { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } },
+                                                                           { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
+                                                                       });
                         break;
                     case Angle._270ccvn:
-                        Assert.Fail(); // todo
+                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[,,]
+                                                                       {
+                                                                           { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } },
+                                                                           { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } },
+                                                                           { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } },
+                                                                       });
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
