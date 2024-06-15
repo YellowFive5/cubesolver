@@ -4,8 +4,11 @@ using Core;
 
 #endregion
 
-var generator = new FiguresGenerator();
-var figures = generator.GenerateFiguresSet();
+var figuresSet = new FiguresGenerator().GenerateFiguresSet();
+var field = new Field();
+
+field.Fit(figuresSet.ElementAt(2));
+
 // end
-Console.ReadKey();
+// Console.ReadKey();
 Console.WriteLine("Exit");
