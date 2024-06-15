@@ -1,4 +1,10 @@
-﻿namespace Core;
+﻿#region Usings
+
+using MathNet.Numerics.LinearAlgebra;
+
+#endregion
+
+namespace Core;
 
 public enum Axis
 {
@@ -26,8 +32,8 @@ public class Figure
     public int MaxHigh { get; init; }
     public int MaxWidth { get; init; }
     public int MaxDepth { get; init; }
-    public int[,,] InitialMap3x3 { get; init; }
-    public int[,,] ActualMap3x3 { get; set; }
+    public Matrix<double>[] InitialMap3x3 { get; init; }
+    public Matrix<double>[] ActualMap3x3 { get; set; }
 
     public void Rotate(Axis rotationAxis, Angle rotationAngle)
     {
@@ -35,7 +41,7 @@ public class Figure
         {
             case Angle._90cvp:
             case Angle._90ccvn:
-                var tempMapCopy = ActualMap3x3.Clone() as int[,,];
+                var tempMapCopy = ActualMap3x3.ToArray();
                 for (var k = 0; k < 3; k++)
                 {
                     for (var j = 0; j < 3; j++)
@@ -45,14 +51,14 @@ public class Figure
                             var swap = rotationAxis switch
                             {
                                 Axis.X => rotationAngle is Angle._90cvp
-                                              ? (Action)(() => ActualMap3x3[j, i, k] = tempMapCopy[2 - i, j, k])
-                                              : (Action)(() => ActualMap3x3[i, j, k] = tempMapCopy[j, 2 - i, k]),
+                                              ? (Action)(() => ActualMap3x3[j][i, k] = tempMapCopy[2 - i][j, k])
+                                              : (Action)(() => ActualMap3x3[i][j, k] = tempMapCopy[j][2 - i, k]),
                                 Axis.Y => rotationAngle is Angle._90cvp
-                                              ? (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[j, 2 - i, k])
-                                              : (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[j, i, 2 - k]),
+                                              ? (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[j][2 - i, k])
+                                              : (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[j][i, 2 - k]),
                                 Axis.Z => rotationAngle is Angle._90cvp
-                                              ? (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[2 - i, k, j])
-                                              : (Action)(() => ActualMap3x3[j, k, i] = tempMapCopy[i, k, 2 - j]),
+                                              ? (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[2 - i][k, j])
+                                              : (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[i][k, 2 - j]),
                                 _ => throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null)
                             };
                             swap.Invoke();

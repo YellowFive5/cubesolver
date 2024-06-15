@@ -1,4 +1,10 @@
-﻿namespace Core;
+﻿#region Usings
+
+using MathNet.Numerics.LinearAlgebra;
+
+#endregion
+
+namespace Core;
 
 public class FiguresGenerator : IFiguresGenerator
 {
@@ -28,12 +34,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 2:
@@ -46,12 +52,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                             ]
                          };
                 break;
             case 3:
@@ -64,12 +70,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 1,
                              MaxWidth = 3,
                              MaxDepth = 3,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 4:
@@ -82,12 +88,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 5:
@@ -100,12 +106,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 6:
@@ -118,12 +124,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 2,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 7:
@@ -136,12 +142,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 8:
@@ -154,12 +160,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 9:
@@ -172,12 +178,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 1,
                              MaxWidth = 3,
                              MaxDepth = 3,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 10:
@@ -190,12 +196,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 1, 1 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 11:
@@ -208,12 +214,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 12:
@@ -226,12 +232,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 2,
                              MaxWidth = 3,
                              MaxDepth = 2,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } },
-                                                 { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             case 13:
@@ -244,12 +250,12 @@ public class FiguresGenerator : IFiguresGenerator
                              MaxHigh = 1,
                              MaxWidth = 3,
                              MaxDepth = 3,
-                             InitialMap3x3 = new[,,]
-                                             {
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                                 { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } },
-                                                 { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } },
-                                             }
+                             InitialMap3x3 =
+                             [
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } })
+                             ]
                          };
                 break;
             default:
