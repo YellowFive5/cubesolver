@@ -11,6 +11,8 @@ var field = new Field();
 
 field.Fit(generator.GenerateFigureById(1));
 
+field.PrintMap();
+
 // end
 // Console.ReadKey();
 Console.WriteLine("Exit");

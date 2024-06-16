@@ -8,7 +8,7 @@ namespace Core;
 
 public class Field
 {
-    private Matrix<double>[] Map { get; set; } =
+    private Matrix<double>[] Map { get; } =
     [
         Matrix<double>.Build.Dense(4, 4, 0),
         Matrix<double>.Build.Dense(4, 4, 0),
@@ -19,11 +19,21 @@ public class Field
 
     public void Fit(Figure figure)
     {
-        var matrix1 = Matrix<double>.Build.Dense(4, 4, 3);
-        var matrix2 = Matrix<double>.Build.Dense(4, 4, 2);
+        var emptyLayer4X4 = Matrix<double>.Build.Dense(4, 4, 0);
 
-        matrix1 += matrix2;
+        foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
+        {
+            emptyLayer4X4.SetSubMatrix(0, 0, figureLayer.value);
+            Map[figureLayer.i] = emptyLayer4X4.Clone();
+            emptyLayer4X4 = Matrix<double>.Build.Dense(4, 4, 0);
+        }
+    }
 
-        Console.WriteLine(matrix1.ToString());
+    public void PrintMap()
+    {
+        foreach (var layer in Map)
+        {
+            Console.WriteLine(layer.ToString());
+        }
     }
 }
