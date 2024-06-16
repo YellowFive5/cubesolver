@@ -41,7 +41,8 @@ public class Figure
         {
             case Angle._90cvp:
             case Angle._90ccvn:
-                var tempMapCopy = ActualMap3x3.ToArray();
+                double[][,] tempMapCopy = [ActualMap3x3[0].ToArray(), ActualMap3x3[1].ToArray(), ActualMap3x3[2].ToArray()];
+                double[][,] tempRotatedOutput = [Matrix<double>.Build.Dense(3, 3, 0).ToArray(), Matrix<double>.Build.Dense(3, 3, 0).ToArray(), Matrix<double>.Build.Dense(3, 3, 0).ToArray()];
                 for (var k = 0; k < 3; k++)
                 {
                     for (var j = 0; j < 3; j++)
@@ -51,14 +52,14 @@ public class Figure
                             var swap = rotationAxis switch
                             {
                                 Axis.X => rotationAngle is Angle._90cvp
-                                              ? (Action)(() => ActualMap3x3[j][i, k] = tempMapCopy[2 - i][j, k])
-                                              : (Action)(() => ActualMap3x3[i][j, k] = tempMapCopy[j][2 - i, k]),
+                                              ? (Action)(() => tempRotatedOutput[j][i, k] = tempMapCopy[2 - i][j, k])
+                                              : (Action)(() => tempRotatedOutput[i][j, k] = tempMapCopy[j][2 - i, k]),
                                 Axis.Y => rotationAngle is Angle._90cvp
-                                              ? (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[j][2 - i, k])
-                                              : (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[j][i, 2 - k]),
+                                              ? (Action)(() => tempRotatedOutput[j][k, i] = tempMapCopy[j][2 - i, k])
+                                              : (Action)(() => tempRotatedOutput[j][k, i] = tempMapCopy[j][i, 2 - k]),
                                 Axis.Z => rotationAngle is Angle._90cvp
-                                              ? (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[2 - i][k, j])
-                                              : (Action)(() => ActualMap3x3[j][k, i] = tempMapCopy[i][k, 2 - j]),
+                                              ? (Action)(() => tempRotatedOutput[j][k, i] = tempMapCopy[2 - i][k, j])
+                                              : (Action)(() => tempRotatedOutput[j][k, i] = tempMapCopy[i][k, 2 - j]),
                                 _ => throw new ArgumentOutOfRangeException(nameof(rotationAxis), rotationAxis, null)
                             };
                             swap.Invoke();
@@ -66,6 +67,7 @@ public class Figure
                     }
                 }
 
+                ActualMap3x3 = [Matrix<double>.Build.DenseOfArray(tempRotatedOutput[0]), Matrix<double>.Build.DenseOfArray(tempRotatedOutput[1]), Matrix<double>.Build.DenseOfArray(tempRotatedOutput[2])];
                 break;
             case Angle._180cvp:
                 Rotate(rotationAxis, Angle._90cvp);
