@@ -121,4 +121,37 @@ public class WhenFittingFigures : FieldTestBase
                 break;
         }
     }
+
+    [TestCase(3, 9, true)]
+    [TestCase(7, 1, false)]
+    public void SecondFigureNotFittedWhenIntersects(int figureId1,
+                                                    int figureId2,
+                                                    bool expected)
+    {
+        var figure1 = FiguresGenerator.GenerateFigureById(figureId1);
+        var figure2 = FiguresGenerator.GenerateFigureById(figureId2);
+
+        Field.TryFit(figure1, 0, 0, 0).Should().BeTrue();
+        Field.Fitted.Should().Contain(figure1);
+        var secondFigureFitted = Field.TryFit(figure2, 1, 0, 0);
+
+        if (expected)
+        {
+            secondFigureFitted.Should().BeTrue();
+            Field.Fitted.Should().Contain(figure2);
+            Field.Map.Should().Equal(Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
+                                     Matrix(new double[,] { { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 0, 0, 0, 0 } }),
+                                     Matrix(new double[,] { { 1, 0, 0, 0 }, { 1, 1, 0, 0 }, { 0, 1, 1, 0 }, { 0, 0, 0, 0 } }),
+                                     Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }));
+        }
+        else
+        {
+            secondFigureFitted.Should().BeFalse();
+            Field.Fitted.Should().NotContain(figure2);
+            Field.Map.Should().Equal(Matrix(new double[,] { { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
+                                     Matrix(new double[,] { { 0, 1, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
+                                     Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
+                                     Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }));
+        }
+    }
 }
