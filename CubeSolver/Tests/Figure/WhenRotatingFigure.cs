@@ -2,7 +2,6 @@
 
 using Core;
 using FluentAssertions;
-using MathNet.Numerics.LinearAlgebra;
 
 #endregion
 
@@ -17,10 +16,9 @@ public class WhenRotatingFigure : FigureTestBase
     public override void Setup()
     {
         base.Setup();
-        var figuresGenerator = new Core.FiguresGenerator();
-        Figure_2 = figuresGenerator.GenerateFigureById(2);
-        Figure_6 = figuresGenerator.GenerateFigureById(6);
-        Figure_13 = figuresGenerator.GenerateFigureById(13);
+        Figure_2 = FiguresGenerator.GenerateFigureById(2);
+        Figure_6 = FiguresGenerator.GenerateFigureById(6);
+        Figure_13 = FiguresGenerator.GenerateFigureById(13);
     }
 
     [TestCase(Axis.X, Angle._90cvp)]
@@ -43,12 +41,9 @@ public class WhenRotatingFigure : FigureTestBase
     [TestCase(Axis.Z, Angle._270ccvn)]
     public void Figure2RotatesCorrectly(Axis rotationAxis, Angle rotationAngle)
     {
-        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                      {
-                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                      });
+        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
 
         Figure_2.Rotate(rotationAxis, rotationAngle);
 
@@ -58,52 +53,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 1, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -114,52 +91,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 1 }, { 0, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 1 }, { 0, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 1 }, { 0, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 1 }, { 0, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -170,52 +129,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_2.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_2.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -247,12 +188,9 @@ public class WhenRotatingFigure : FigureTestBase
     [TestCase(Axis.Z, Angle._270ccvn)]
     public void Figure6RotatesCorrectly(Axis rotationAxis, Angle rotationAngle)
     {
-        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                      {
-                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                      });
+        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
 
         Figure_6.Rotate(rotationAxis, rotationAngle);
 
@@ -262,52 +200,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 1, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 1, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 1, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 1, 1, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -318,52 +238,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 1, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 1, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 1, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 1, 1, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 1, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 1, 1 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 1, 1 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -374,52 +276,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 1, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 1 }, { 0, 1, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_6.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                      {
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 1, 1 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                          Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                      });
+                        Figure_6.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 1 }, { 0, 1, 1 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                             Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -451,12 +335,9 @@ public class WhenRotatingFigure : FigureTestBase
     [TestCase(Axis.Z, Angle._270ccvn)]
     public void Figure13RotatesCorrectly(Axis rotationAxis, Angle rotationAngle)
     {
-        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                       {
-                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } }),
-                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                       });
+        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                              Matrix(new double[,] { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
 
         Figure_13.Rotate(rotationAxis, rotationAngle);
 
@@ -466,52 +347,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 1 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -522,52 +385,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 1, 1, 0 }, { 0, 1, 1 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 1, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
@@ -578,52 +423,34 @@ public class WhenRotatingFigure : FigureTestBase
                 switch (rotationAngle)
                 {
                     case Angle._90cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270cvp:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._90ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._180ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 1, 0, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                         break;
                     case Angle._270ccvn:
-                        Figure_13.ActualMap3x3.Should().BeEquivalentTo(new[]
-                                                                       {
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
-                                                                           Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                       });
+                        Figure_13.ActualMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                              Matrix(new double[,] { { 0, 0, 0 }, { 0, 1, 0 }, { 0, 1, 0 } }),
+                                                              Matrix(new double[,] { { 0, 1, 0 }, { 0, 1, 0 }, { 0, 0, 0 } }));
                         break;
                     default:
                         throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);

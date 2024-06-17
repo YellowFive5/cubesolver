@@ -8,7 +8,7 @@ namespace Core;
 
 public class Field
 {
-    private Matrix<double>[] Map { get; } =
+    public Matrix<double>[] Map { get; } =
     [
         Matrix<double>.Build.Dense(4, 4, 0),
         Matrix<double>.Build.Dense(4, 4, 0),
@@ -16,7 +16,7 @@ public class Field
         Matrix<double>.Build.Dense(4, 4, 0),
     ];
 
-    public List<Figure> Fitted { get; set; } = new List<Figure>();
+    public List<Figure> Fitted { get; set; } = new();
 
     public bool TryFit(Figure figure, int y, int x, int z)
     {

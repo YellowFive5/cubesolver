@@ -2,7 +2,6 @@
 
 using Core;
 using FluentAssertions;
-using MathNet.Numerics.LinearAlgebra;
 
 #endregion
 
@@ -10,12 +9,9 @@ namespace Tests.FiguresGenerator;
 
 public class WhenGeneratingFigures : FiguresGeneratorTestBase
 {
-    protected IFiguresGenerator FiguresGenerator { get; set; }
-
     public override void Setup()
     {
         base.Setup();
-        FiguresGenerator = new Core.FiguresGenerator();
     }
 
     [Test]
@@ -89,115 +85,76 @@ public class WhenGeneratingFigures : FiguresGeneratorTestBase
         switch (id)
         {
             case 1:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 2:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 3:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 4:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 1 }, { 1, 1, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 5:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 6:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 7:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 1 }, { 0, 1, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 8:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 1 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 1 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 9:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 1, 0, 0 }, { 1, 1, 0 }, { 0, 1, 1 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 10:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 1, 1 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 11:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 1, 1, 1 }, { 1, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 12:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 1, 0 }, { 1, 1, 1 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 1, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             case 13:
-                figure.InitialMap3x3.Should().BeEquivalentTo(new[]
-                                                             {
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } }),
-                                                                 Matrix<double>.Build.DenseOfArray(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
-                                                             });
+                figure.InitialMap3x3.Should().Equal(Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 1 }, { 1, 1, 1 }, { 0, 1, 0 } }),
+                                                    Matrix(new double[,] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } }));
                 break;
             default:
                 Assert.Fail();
                 break;
         }
 
-        figure.ActualMap3x3.Should().BeEquivalentTo(figure.InitialMap3x3);
+        figure.ActualMap3x3.Should().Equal(figure.InitialMap3x3);
     }
 
     [Test]
