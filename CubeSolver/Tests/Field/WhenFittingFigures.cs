@@ -170,24 +170,61 @@ public class WhenFittingFigures : FieldTestBase
     }
 
     [TestCase(0, 0, 0, true)]
+    [TestCase(-8, 0, 0, false)]
+    [TestCase(-7, 0, 0, false)]
+    [TestCase(-6, 0, 0, false)]
+    [TestCase(-5, 0, 0, false)]
+    [TestCase(-4, 0, 0, false)]
+    [TestCase(-3, 0, 0, false)]
+    [TestCase(-2, 0, 0, false)]
     [TestCase(-1, 0, 0, false)]
     [TestCase(1, 0, 0, true)]
     [TestCase(2, 0, 0, true)]
     [TestCase(3, 0, 0, false)]
+    [TestCase(4, 0, 0, false)]
+    [TestCase(5, 0, 0, false)]
+    [TestCase(6, 0, 0, false)]
+    [TestCase(7, 0, 0, false)]
+    [TestCase(8, 0, 0, false)]
+    [TestCase(0, -8, 0, false)]
+    [TestCase(0, -7, 0, false)]
+    [TestCase(0, -6, 0, false)]
+    [TestCase(0, -5, 0, false)]
+    [TestCase(0, -4, 0, false)]
+    [TestCase(0, -3, 0, false)]
+    [TestCase(0, -2, 0, false)]
     [TestCase(0, -1, 0, false)]
     [TestCase(0, 1, 0, true)]
-    [TestCase(0, 2, 0, true)]
+    [TestCase(0, 2, 0, false)]
     [TestCase(0, 3, 0, false)]
+    [TestCase(0, 4, 0, false)]
+    [TestCase(0, 5, 0, false)]
+    [TestCase(0, 6, 0, false)]
+    [TestCase(0, 7, 0, false)]
+    [TestCase(0, 8, 0, false)]
+    [TestCase(0, 0, -8, false)]
+    [TestCase(0, 0, -7, false)]
+    [TestCase(0, 0, -6, false)]
+    [TestCase(0, 0, -5, false)]
+    [TestCase(0, 0, -4, false)]
+    [TestCase(0, 0, -3, false)]
+    [TestCase(0, 0, -2, false)]
     [TestCase(0, 0, -1, false)]
     [TestCase(0, 0, 1, true)]
     [TestCase(0, 0, 2, true)]
     [TestCase(0, 0, 3, false)]
+    [TestCase(0, 0, 4, false)]
+    [TestCase(0, 0, 5, false)]
+    [TestCase(0, 0, 6, false)]
+    [TestCase(0, 0, 7, false)]
+    [TestCase(0, 0, 8, false)]
     public void FigureNotFitsWhenOutOfBounds(int y, int x, int z, bool expected)
     {
         var figure1 = FiguresGenerator.GenerateFigureById(4);
 
-        Field.TryFit(figure1, y, x, z).Should().Be(expected);
+        var fitted = Field.TryFit(figure1, y, x, z);
 
+        fitted.Should().Be(expected);
         var contains = Field.Fitted.Contains(figure1);
         contains.Should().Be(expected);
     }
