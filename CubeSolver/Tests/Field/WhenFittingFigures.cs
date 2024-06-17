@@ -154,4 +154,40 @@ public class WhenFittingFigures : FieldTestBase
                                      Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }));
         }
     }
+    [Ignore("temp")]
+    [Test]
+    public void FigureNotFittedWhenEmptyHoleRemained()
+    {
+        var figure1 = FiguresGenerator.GenerateFigureById(9);
+        var figure2 = FiguresGenerator.GenerateFigureById(4);
+        Field.TryFit(figure1, -1, 0, 1);
+
+        var secondFigureFitted = Field.TryFit(figure2, 1, 0, 1);
+
+        secondFigureFitted.Should().BeFalse();
+        Field.Fitted.Should().NotContain(figure2);
+    }
+
+    [TestCase(0, 0, 0, true)]
+    [TestCase(-1, 0, 0, false)]
+    [TestCase(1, 0, 0, true)]
+    [TestCase(2, 0, 0, true)]
+    [TestCase(3, 0, 0, false)]
+    [TestCase(0, -1, 0, false)]
+    [TestCase(0, 1, 0, true)]
+    [TestCase(0, 2, 0, true)]
+    [TestCase(0, 3, 0, false)]
+    [TestCase(0, 0, -1, false)]
+    [TestCase(0, 0, 1, true)]
+    [TestCase(0, 0, 2, true)]
+    [TestCase(0, 0, 3, false)]
+    public void FigureNotFitsWhenOutOfBounds(int y, int x, int z, bool expected)
+    {
+        var figure1 = FiguresGenerator.GenerateFigureById(4);
+
+        Field.TryFit(figure1, y, x, z).Should().Be(expected);
+
+        var contains = Field.Fitted.Contains(figure1);
+        contains.Should().Be(expected);
+    }
 }
