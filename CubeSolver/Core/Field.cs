@@ -8,67 +8,50 @@ namespace Core;
 
 public class Field
 {
-    public Matrix<double>[] Map { get; } = EmptyMap();
+    public Matrix<double>[] FittingMap { get; } = EmptyMap4X4X4();
+    private Matrix<double>[] FullMap { get; } = EmptyMap8X8X8();
 
-    public List<Figure> Fitted { get; set; } = new();
+    public List<Figure> Fitted { get; } = new();
 
     public bool TryFit(Figure figure, int y, int x, int z)
     {
-        
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
         {
-            var emptyLayer4X4 = EmptyLayer();
+            var figureFittedLayer8X8 = EmptyLayer8X8();
+            figureFittedLayer8X8.SetSubMatrix(z + 2, x + 2, figureLayer.value);
+            var figureFittedLayer4X4 = MatrixCut8To4(figureFittedLayer8X8);
 
-            if (figureLayer.value.ColumnSums().Sum() == 0) // figure layer empty
-            {
-                continue;
-            }
-            
             // out of bounds check
-            var layerIndex = figureLayer.i + y;
-            if (layerIndex < 0 || layerIndex >= Map.Length)
+            if (figureFittedLayer4X4.ColumnSums().Sum() < figureLayer.value.ColumnSums().Sum())
             {
                 return false;
             }
-            
+
             // figures intersects check
-            emptyLayer4X4.SetSubMatrix(z, x, figureLayer.value);
-            emptyLayer4X4 += Map[layerIndex];
-            if (emptyLayer4X4.Exists(v => v > 1))
+            figureFittedLayer8X8 += FullMap[figureLayer.i + y + 2];
+            figureFittedLayer4X4 = MatrixCut8To4(figureFittedLayer8X8);
+
+            if (figureFittedLayer4X4.Exists(v => v > 1))
             {
                 return false;
             }
         }
-        
+
         // Empty holes check
-        // todo realization needed
-        var tempMap = EmptyMap();
+        var tempMap = EmptyMap4X4X4();
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
         {
-            var emptyLayer4X4 = EmptyLayer();
-
-            if (figureLayer.value.ColumnSums().Sum() == 0) // figure layer empty
-            {
-                continue;
-            }
-
-            emptyLayer4X4.SetSubMatrix(z, x, figureLayer.value);
-            tempMap[figureLayer.i + y] += emptyLayer4X4.Clone();
+            // todo realization needed
         }
-
 
         // all checks ok - fit
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
         {
-            var emptyLayer4X4 = EmptyLayer();
-
-            if (figureLayer.value.ColumnSums().Sum() == 0) // figure layer empty
-            {
-                continue;
-            }
-
-            emptyLayer4X4.SetSubMatrix(z, x, figureLayer.value);
-            Map[figureLayer.i + y] += emptyLayer4X4.Clone();
+            var figureFittedLayer8X8 = EmptyLayer8X8();
+            figureFittedLayer8X8.SetSubMatrix(z + 2, x + 2, figureLayer.value);
+            FullMap[figureLayer.i + y + 2] += figureFittedLayer8X8.Clone();
+            var figureFittedLayer4X4 = MatrixCut8To4(figureFittedLayer8X8);
+            FittingMap[figureLayer.i + y] += figureFittedLayer4X4.Clone();
         }
 
         Fitted.Add(figure);
@@ -78,19 +61,45 @@ public class Field
     public void PrintMap()
     {
         Console.WriteLine($"Figures fitted:{Fitted.Count}");
-        foreach (var layer in Map)
+        foreach (var layer in FittingMap)
         {
             Console.WriteLine(layer.ToString());
         }
     }
 
-    private static Matrix<double> EmptyLayer()
+    private static Matrix<double> EmptyLayer4X4()
     {
         return Matrix<double>.Build.Dense(4, 4, 0);
     }
 
-    private static Matrix<double>[] EmptyMap()
+    private static Matrix<double> EmptyLayer8X8()
     {
-        return [EmptyLayer(), EmptyLayer(), EmptyLayer(), EmptyLayer()];
+        return Matrix<double>.Build.Dense(8, 8, 0);
+    }
+
+    private static Matrix<double>[] EmptyMap4X4X4()
+    {
+        return [EmptyLayer4X4(), EmptyLayer4X4(), EmptyLayer4X4(), EmptyLayer4X4()];
+    }
+
+    private static Matrix<double>[] EmptyMap8X8X8()
+    {
+        return [EmptyLayer8X8(), EmptyLayer8X8(), EmptyLayer8X8(), EmptyLayer8X8(), EmptyLayer8X8(), EmptyLayer8X8(), EmptyLayer8X8(), EmptyLayer8X8()];
+    }
+
+    private static Matrix<double> MatrixCut8To4(Matrix<double> matrix)
+    {
+        Console.WriteLine(matrix);
+        var copy = matrix.Clone()
+                         .RemoveRow(6)
+                         .RemoveRow(6)
+                         .RemoveColumn(6)
+                         .RemoveColumn(6)
+                         .RemoveRow(0)
+                         .RemoveRow(0)
+                         .RemoveColumn(0)
+                         .RemoveColumn(0);
+        Console.WriteLine(copy);
+        return copy;
     }
 }
