@@ -53,6 +53,19 @@ public class Field
         var tempFittingMap = FittingMap.ToArray();
         var tempFullMap = FullMap.ToArray();
 
+        tempFullMap[0] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[1] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[2] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[2].SetSubMatrix(2, 2, tempFittingMap[0]);
+        tempFullMap[3] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[3].SetSubMatrix(2, 2, tempFittingMap[1]);
+        tempFullMap[4] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[4].SetSubMatrix(2, 2, tempFittingMap[2]);
+        tempFullMap[5] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[5].SetSubMatrix(2, 2, tempFittingMap[3]);
+        tempFullMap[6] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[7] = Matrix<double>.Build.Dense(8, 8, 1);
+
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
         {
             var figureFittedLayer8X8 = EmptyLayerX8();
@@ -63,50 +76,6 @@ public class Field
             {
                 tempFittingMap[figureLayer.i + y] += figureFittedLayer4X4.Clone();
             }
-        }
-
-        tempFullMap[0] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[1] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[2].SetColumn(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetColumn(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetColumn(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetColumn(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetRow(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetRow(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetRow(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[2].SetRow(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetColumn(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetColumn(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetColumn(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetColumn(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetRow(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetRow(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetRow(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[3].SetRow(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetColumn(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetColumn(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetColumn(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetColumn(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetRow(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetRow(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetRow(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[4].SetRow(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetColumn(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetColumn(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetColumn(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetColumn(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetRow(0, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetRow(1, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetRow(6, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[5].SetRow(7, Vector<double>.Build.Dense(8, 1));
-        tempFullMap[6] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[7] = Matrix<double>.Build.Dense(8, 8, 1);
-
-
-        Console.WriteLine("-*-*-*-*-*-*");
-        foreach (var matrix in tempFittingMap)
-        {
-            Console.WriteLine(matrix);
         }
 
         foreach (var tempMapLayer in tempFittingMap.Select((value, i) => new { i, value }))
