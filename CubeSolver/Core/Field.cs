@@ -47,12 +47,102 @@ public class Field
             }
         }
 
+        #region Empty holes check
+
         // Empty holes check
-        var tempMap = EmptyMapX4();
+        var tempFittingMap = FittingMap.ToArray();
+        var tempFullMap = FullMap.ToArray();
+
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
         {
-            // todo realization needed
+            var figureFittedLayer8X8 = EmptyLayerX8();
+            figureFittedLayer8X8.SetSubMatrix(z + 2, x + 2, figureLayer.value);
+            tempFullMap[figureLayer.i + y + 2] += figureFittedLayer8X8.Clone();
+            var figureFittedLayer4X4 = MatrixCut8To4(figureFittedLayer8X8);
+            if (figureLayer.value.ColumnSums().Sum() > 0) // empty side out of bounds ok
+            {
+                tempFittingMap[figureLayer.i + y] += figureFittedLayer4X4.Clone();
+            }
         }
+
+        tempFullMap[0] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[1] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[2].SetColumn(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetColumn(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetColumn(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetColumn(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetRow(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetRow(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetRow(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[2].SetRow(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetColumn(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetColumn(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetColumn(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetColumn(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetRow(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetRow(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetRow(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[3].SetRow(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetColumn(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetColumn(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetColumn(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetColumn(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetRow(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetRow(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetRow(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[4].SetRow(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetColumn(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetColumn(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetColumn(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetColumn(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetRow(0, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetRow(1, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetRow(6, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[5].SetRow(7, Vector<double>.Build.Dense(8, 1));
+        tempFullMap[6] = Matrix<double>.Build.Dense(8, 8, 1);
+        tempFullMap[7] = Matrix<double>.Build.Dense(8, 8, 1);
+
+
+        Console.WriteLine("-*-*-*-*-*-*");
+        foreach (var matrix in tempFittingMap)
+        {
+            Console.WriteLine(matrix);
+        }
+
+        foreach (var tempMapLayer in tempFittingMap.Select((value, i) => new { i, value }))
+        {
+            var columns = tempMapLayer.value.ColumnCount;
+            var rows = tempMapLayer.value.RowCount;
+            for (var i = 0; i < columns; i++)
+            {
+                for (var j = 0; j < rows; j++)
+                {
+                    // var isCorner = tempMapLayer.i is > 0 and < 3 &&
+                    //                i is > 0 and < 3 &&
+                    //                j is > 0 and < 3;
+                    // var isSurface = !isCorner && (tempMapLayer.i is > 0 and < 3 ||
+                    //                               i is > 0 and < 3 ||
+                    //                               j is > 0 and < 3);
+                    // var isInner = !isSurface;
+                    var isFilled = tempMapLayer.value[i, j] > 0;
+                    if (!isFilled)
+                    {
+                        var totallyFilledAround = tempFullMap[tempMapLayer.i + 1 + 2][i + 2, j + 2] > 0 &&
+                                                  tempFullMap[tempMapLayer.i - 1 + 2][i + 2, j + 2] > 0 &&
+                                                  tempFullMap[tempMapLayer.i + 2][i + 2 + 1, j + 2] > 0 &&
+                                                  tempFullMap[tempMapLayer.i + 2][i + 2 - 1, j + 2] > 0 &&
+                                                  tempFullMap[tempMapLayer.i + 2][i + 2, j + 1 + 2] > 0 &&
+                                                  tempFullMap[tempMapLayer.i + 2][i + 2, j - 1 + 2] > 0;
+                        if (totallyFilledAround)
+                        {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+
+        #endregion
 
         // all checks ok - fit da guy
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
@@ -102,7 +192,6 @@ public class Field
 
     private static Matrix<double> MatrixCut8To4(Matrix<double> matrix)
     {
-        Console.WriteLine(matrix);
         var copy = matrix.Clone()
                          .RemoveRow(6)
                          .RemoveRow(6)
@@ -112,7 +201,6 @@ public class Field
                          .RemoveRow(0)
                          .RemoveColumn(0)
                          .RemoveColumn(0);
-        Console.WriteLine(copy);
         return copy;
     }
 }

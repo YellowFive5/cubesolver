@@ -9,9 +9,13 @@ var generator = new FiguresGenerator();
 
 var field = new Field();
 
-field.TryFit(generator.GenerateFigureById(2), 0, 0, 0);
+var figure1 = generator.GenerateFigureById(9);
+field.TryFit(figure1, -1, 0, 0);
+var figure2 = generator.GenerateFigureById(2);
+figure2.Rotate(Axis.X, Angle._90ccvn);
+field.TryFit(figure2, -1, 1, 0);
 
-field.PrintMap();
+// field.PrintMap();
 
 // end
 // Console.ReadKey();

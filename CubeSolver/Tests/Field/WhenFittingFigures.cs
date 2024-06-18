@@ -1,5 +1,6 @@
 #region Usings
 
+using Core;
 using FluentAssertions;
 
 #endregion
@@ -155,19 +156,34 @@ public class WhenFittingFigures : FieldTestBase
         }
     }
 
-    [Ignore("temp")]
     [Test]
-    public void FigureNotFittedWhenEmptyHoleRemained()
+    public void FigureNotFittedWhenEmptyHoleRemainedInCorner()
     {
         var figure1 = FiguresGenerator.GenerateFigureById(9);
-        var figure2 = FiguresGenerator.GenerateFigureById(4);
         Field.TryFit(figure1, -1, 0, 1);
+        var figure2 = FiguresGenerator.GenerateFigureById(4);
 
-        var secondFigureFitted = Field.TryFit(figure2, 1, 0, 1);
+        var secondFigureFitted = Field.TryFit(figure2, 1, 0, 2);
 
         secondFigureFitted.Should().BeFalse();
         Field.Fitted.Should().NotContain(figure2);
     }
+
+    [Test]
+    public void FigureNotFittedWhenEmptyHoleRemainedOnSide()
+    {
+        var figure1 = FiguresGenerator.GenerateFigureById(9);
+        Field.TryFit(figure1, -1, 0, 0);
+        var figure2 = FiguresGenerator.GenerateFigureById(2);
+        figure2.Rotate(Axis.X, Angle._90ccvn);
+
+        var secondFigureFitted = Field.TryFit(figure2, -1, 0, 0);
+
+        secondFigureFitted.Should().BeFalse();
+        Field.Fitted.Should().NotContain(figure2);
+    }
+
+    #region TestCases
 
     [TestCase(0, 0, 0, true)]
     [TestCase(-8, 0, 0, false)]
@@ -218,6 +234,9 @@ public class WhenFittingFigures : FieldTestBase
     [TestCase(0, 0, 6, false)]
     [TestCase(0, 0, 7, false)]
     [TestCase(0, 0, 8, false)]
+
+    #endregion
+
     public void FigureNotFitsWhenOutOfBounds(int y, int x, int z, bool expected)
     {
         var figure1 = FiguresGenerator.GenerateFigureById(4);
