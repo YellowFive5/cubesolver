@@ -8,8 +8,8 @@ namespace Core;
 
 public class Field
 {
-    public Matrix<double>[] FittingMap { get; } = EmptyMapX4();
-    private Matrix<double>[] FullMap { get; } = EmptyMapX8();
+    public Matrix<double>[] FittingMap { get; set; } = EmptyMapX4();
+    public Matrix<double>[] FullMap { get; set; } = EmptyMapX8();
 
     public List<Figure> Fitted { get; } = new();
 
@@ -124,15 +124,6 @@ public class Field
 
         Fitted.Add(figure);
         return true;
-    }
-
-    public void PrintMap()
-    {
-        Console.WriteLine($"Figures fitted:{Fitted.Count}");
-        foreach (var layer in FittingMap)
-        {
-            Console.WriteLine(layer.ToString());
-        }
     }
 
     private static Matrix<double> EmptyLayerX4()

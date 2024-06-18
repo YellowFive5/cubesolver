@@ -15,12 +15,13 @@ public enum Axis
 
 public enum Angle
 {
-    _90cvp,
+    _90cvp = 1,
     _180cvp,
     _270cvp,
     _90ccvn,
     _180ccvn,
-    _270ccvn
+    _270ccvn = 6,
+    _0
 }
 
 public class Figure
@@ -86,6 +87,8 @@ public class Figure
                 Rotate(rotationAxis, Angle._90ccvn);
                 Rotate(rotationAxis, Angle._90ccvn);
                 Rotate(rotationAxis, Angle._90ccvn);
+                break;
+            case Angle._0:
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(rotationAngle), rotationAngle, null);
