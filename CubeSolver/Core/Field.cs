@@ -53,18 +53,14 @@ public class Field
         var tempFittingMap = FittingMap.ToArray();
         var tempFullMap = FullMap.ToArray();
 
-        tempFullMap[0] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[1] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[2] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[2].SetSubMatrix(2, 2, tempFittingMap[0]);
-        tempFullMap[3] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[3].SetSubMatrix(2, 2, tempFittingMap[1]);
-        tempFullMap[4] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[4].SetSubMatrix(2, 2, tempFittingMap[2]);
-        tempFullMap[5] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[5].SetSubMatrix(2, 2, tempFittingMap[3]);
-        tempFullMap[6] = Matrix<double>.Build.Dense(8, 8, 1);
-        tempFullMap[7] = Matrix<double>.Build.Dense(8, 8, 1);
+        foreach (var tempFullMapLayer in tempFullMap.Select((value, i) => new { i, value }))
+        {
+            tempFullMap[tempFullMapLayer.i] = Matrix<double>.Build.Dense(8, 8, 1);
+            if (tempFullMapLayer.i is > 1 and < 6)
+            {
+                tempFullMap[tempFullMapLayer.i].SetSubMatrix(2, 2, tempFittingMap[tempFullMapLayer.i - 2]);
+            }
+        }
 
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
         {
