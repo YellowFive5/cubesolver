@@ -1,6 +1,7 @@
 #region Usings
 
 using MathNet.Numerics.LinearAlgebra;
+using Console = Colorful.Console;
 
 #endregion
 
@@ -45,16 +46,34 @@ public class Solver
             }
         }
 
-        while (FiguresSet.Any())
+        var figuresSetWorking = FiguresSet.ToList();
+        while (figuresSetWorking.Any())
         {
             figureIteration++;
-            var rndIndex = new Random().Next(0, FiguresSet.Count - 1);
-            var nextFigure = FiguresSet.ElementAt(rndIndex);
-            FiguresSet.RemoveAt(rndIndex);
+            var rndIndex = new Random().Next(0, figuresSetWorking.Count - 1);
+            var nextFigure = figuresSetWorking.ElementAt(rndIndex);
+            figuresSetWorking.RemoveAt(rndIndex);
 
-            Console.WriteLine($"Iteration: {figureIteration} " +
-                              $"Figure number:{13 - FiguresSet.Count} " +
-                              $"Figure:{nextFigure.Id}");
+            var figureNumber = 13 - figuresSetWorking.Count;
+
+            if (figureIteration % 100000 == 0)
+            {
+                Console.WriteLine($"Iteration: {figureIteration}",
+                                  System.Drawing.Color.Gray);
+            }
+            switch (figureNumber)
+            {
+                case 12:
+                    Console.WriteLine($"Iteration: {figureIteration} " +
+                                      $"Figures count:{figureNumber}",
+                                      System.Drawing.Color.MediumVioletRed);
+                    break;
+                case 13:
+                    Console.WriteLine($"Iteration: {figureIteration} " +
+                                      $"Figures count:{figureNumber}",
+                                      System.Drawing.Color.Yellow);
+                    break;
+            }
 
             var figureFitMaps = figureFitMapsEthalon.ToList();
             var fitted = false;
@@ -84,29 +103,13 @@ public class Solver
 
             if (!fitted) // not fitted after all rotates
             {
-                FiguresSet.Add(nextFigure);
+                figuresSetWorking = FiguresSet.ToList();
 
-                if (FiguresFitHistory.Any())
-                {
-                    FiguresSet.Add(FiguresFitHistory.Pop());
-                }
+                FiguresFitHistory.Clear();
+                FittingMapHistory.Clear();
 
-                if (FittingMapHistory.Any())
-                {
-                    FittingMapHistory.Pop();
-                }
-
-                if (FullMapHistory.Any())
-                {
-                    FullMapHistory.Pop();
-                }
-
-                Field.FittingMap = FittingMapHistory.Any()
-                                       ? FittingMapHistory.Peek().ToArray()
-                                       : Field.EmptyMapX4();
-                Field.FullMap = FullMapHistory.Any()
-                                    ? FullMapHistory.Peek().ToArray()
-                                    : Field.EmptyMapX8();
+                Field.FittingMap = Field.EmptyMapX4();
+                Field.FullMap = Field.EmptyMapX8();
             }
         }
 
