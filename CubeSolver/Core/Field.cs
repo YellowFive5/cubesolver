@@ -11,8 +11,6 @@ public class Field
     public Matrix<double>[] FittingMap { get; set; } = EmptyMapX4();
     public Matrix<double>[] FullMap { get; set; } = EmptyMapX8();
 
-    public List<Figure> Fitted { get; } = new();
-
     public bool TryFit(Figure figure, int y, int x, int z)
     {
         foreach (var figureLayer in figure.ActualMap3x3.Select((value, i) => new { i, value }))
@@ -122,7 +120,6 @@ public class Field
             }
         }
 
-        Fitted.Add(figure);
         return true;
     }
 
@@ -136,12 +133,12 @@ public class Field
         return Matrix<double>.Build.Dense(8, 8, 0);
     }
 
-    private static Matrix<double>[] EmptyMapX4()
+    public static Matrix<double>[] EmptyMapX4()
     {
         return [EmptyLayerX4(), EmptyLayerX4(), EmptyLayerX4(), EmptyLayerX4()];
     }
 
-    private static Matrix<double>[] EmptyMapX8()
+    public static Matrix<double>[] EmptyMapX8()
     {
         return [EmptyLayerX8(), EmptyLayerX8(), EmptyLayerX8(), EmptyLayerX8(), EmptyLayerX8(), EmptyLayerX8(), EmptyLayerX8(), EmptyLayerX8()];
     }

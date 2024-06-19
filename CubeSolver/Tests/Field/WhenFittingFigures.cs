@@ -32,7 +32,6 @@ public class WhenFittingFigures : FieldTestBase
         var result = Field.TryFit(figure, y, x, z);
 
         result.Should().BeTrue();
-        Field.Fitted.Should().Contain(figure);
 
         switch (y)
         {
@@ -133,13 +132,11 @@ public class WhenFittingFigures : FieldTestBase
         var figure2 = FiguresGenerator.GenerateFigureById(figureId2);
 
         Field.TryFit(figure1, 0, 0, 0).Should().BeTrue();
-        Field.Fitted.Should().Contain(figure1);
         var secondFigureFitted = Field.TryFit(figure2, 1, 0, 0);
 
         if (expected)
         {
             secondFigureFitted.Should().BeTrue();
-            Field.Fitted.Should().Contain(figure2);
             Field.FittingMap.Should().Equal(Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
                                             Matrix(new double[,] { { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 0, 0, 0, 0 } }),
                                             Matrix(new double[,] { { 1, 0, 0, 0 }, { 1, 1, 0, 0 }, { 0, 1, 1, 0 }, { 0, 0, 0, 0 } }),
@@ -148,7 +145,6 @@ public class WhenFittingFigures : FieldTestBase
         else
         {
             secondFigureFitted.Should().BeFalse();
-            Field.Fitted.Should().NotContain(figure2);
             Field.FittingMap.Should().Equal(Matrix(new double[,] { { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
                                             Matrix(new double[,] { { 0, 1, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
                                             Matrix(new double[,] { { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 }, { 0, 0, 0, 0 } }),
@@ -166,7 +162,6 @@ public class WhenFittingFigures : FieldTestBase
         var secondFigureFitted = Field.TryFit(figure2, 1, 0, 2);
 
         secondFigureFitted.Should().BeFalse();
-        Field.Fitted.Should().NotContain(figure2);
     }
 
     [Test]
@@ -180,7 +175,6 @@ public class WhenFittingFigures : FieldTestBase
         var secondFigureFitted = Field.TryFit(figure2, -1, 0, 0);
 
         secondFigureFitted.Should().BeFalse();
-        Field.Fitted.Should().NotContain(figure2);
     }
 
     #region TestCases
@@ -244,7 +238,5 @@ public class WhenFittingFigures : FieldTestBase
         var fitted = Field.TryFit(figure1, y, x, z);
 
         fitted.Should().Be(expected);
-        var contains = Field.Fitted.Contains(figure1);
-        contains.Should().Be(expected);
     }
 }

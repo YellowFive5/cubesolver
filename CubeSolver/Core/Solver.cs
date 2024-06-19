@@ -11,73 +11,102 @@ public class Solver
     private Field Field { get; }
     private FiguresGenerator FiguresGenerator { get; }
 
-    private Queue<Figure> FiguresSet { get; }
+    private List<Figure> FiguresSet { get; }
 
     private Stack<Figure> FiguresFitHistory { get; } = new();
-    private Stack<Matrix<double>[]> FullMapHistory { get; } = new();
     private Stack<Matrix<double>[]> FittingMapHistory { get; } = new();
+    private Stack<Matrix<double>[]> FullMapHistory { get; } = new();
 
     public Solver()
     {
         Field = new Field();
         FiguresGenerator = new FiguresGenerator();
-        FiguresSet = new Queue<Figure>(FiguresGenerator.GenerateFiguresSet());
+        FiguresSet = new List<Figure>(FiguresGenerator.GenerateFiguresSet());
     }
 
     public void Solve()
     {
         var figureIteration = 0;
-        while (FiguresSet.Any())
+        var figureFitMapsEthalon = new List<int[]>();
+        for (var y = -2; y <= 3; y++)
         {
-            figureIteration++;
-            var nextFigure = FiguresSet.Dequeue();
-            Console.WriteLine($"Iteration: {figureIteration} " +
-                              $"Figure number:{13 - FiguresSet.Count} " +
-                              $"Figure:{nextFigure.Id}");
-
-            bool fitted = false;
-            for (int y = -2; y <= 3 && !fitted; y++)
+            for (var x = -2; x <= 3; x++)
             {
-                for (int x = -2; x <= 3 && !fitted; x++)
+                for (var z = -2; z <= 3; z++)
                 {
-                    for (int z = -2; z <= 3 && !fitted; z++)
+                    foreach (Axis axis in Enum.GetValues(typeof(Axis)))
                     {
-                        foreach (Axis axis in Enum.GetValues(typeof(Axis)))
+                        foreach (Angle angle in Enum.GetValues(typeof(Angle)))
                         {
-                            foreach (Angle angle in Enum.GetValues(typeof(Angle)))
-                            {
-                                if (fitted)
-                                {
-                                    break;
-                                }
-
-                                nextFigure.Rotate(axis, angle);
-                                fitted = Field.TryFit(nextFigure, y, x, z);
-                                if (fitted) // try fit rotated
-                                {
-                                    FiguresFitHistory.Push(nextFigure);
-                                    FullMapHistory.Push(Field.FullMap.ToArray());
-                                    FittingMapHistory.Push(Field.FittingMap.ToArray());
-                                    break;
-                                }
-
-                                nextFigure.Rotate(axis,
-                                                  (int)angle < 4
-                                                      ? (Angle)((int)angle + 3)
-                                                      : (Angle)((int)angle - 3)); // reverse rotate
-                            }
+                            figureFitMapsEthalon.Add([y, x, z, (int)axis, (int)angle]);
                         }
                     }
                 }
             }
+        }
 
-            if (!fitted)
+        while (FiguresSet.Any())
+        {
+            figureIteration++;
+            var rndIndex = new Random().Next(0, FiguresSet.Count - 1);
+            var nextFigure = FiguresSet.ElementAt(rndIndex);
+            FiguresSet.RemoveAt(rndIndex);
+
+            Console.WriteLine($"Iteration: {figureIteration} " +
+                              $"Figure number:{13 - FiguresSet.Count} " +
+                              $"Figure:{nextFigure.Id}");
+
+            var figureFitMaps = figureFitMapsEthalon.ToList();
+            var fitted = false;
+            while (!fitted && figureFitMaps.Any())
             {
-                FiguresSet.Enqueue(nextFigure);
-                FiguresSet.Enqueue(FiguresFitHistory.Pop());
-                Field.FittingMap = FittingMapHistory.Pop();
-                Field.FullMap = FullMapHistory.Pop();
-                Field.Fitted.RemoveAt(Field.Fitted.Count - 1);
+                rndIndex = new Random().Next(0, figureFitMaps.Count - 1);
+                var figureFitMap = figureFitMaps.ElementAt(rndIndex);
+                figureFitMaps.RemoveAt(rndIndex);
+
+                nextFigure.Rotate((Axis)figureFitMap[3], (Angle)figureFitMap[4]);
+                fitted = Field.TryFit(nextFigure,
+                                      figureFitMap[0],
+                                      figureFitMap[1],
+                                      figureFitMap[2]);
+                nextFigure.Rotate((Axis)figureFitMap[3],
+                                  figureFitMap[4] < 4
+                                      ? (Angle)(figureFitMap[4] + 3)
+                                      : (Angle)(figureFitMap[4] - 3)); // reverse rotate
+
+                if (fitted)
+                {
+                    FiguresFitHistory.Push(nextFigure);
+                    FittingMapHistory.Push(Field.FittingMap.ToArray());
+                    FullMapHistory.Push(Field.FullMap.ToArray());
+                }
+            }
+
+            if (!fitted) // not fitted after all rotates
+            {
+                FiguresSet.Add(nextFigure);
+
+                if (FiguresFitHistory.Any())
+                {
+                    FiguresSet.Add(FiguresFitHistory.Pop());
+                }
+
+                if (FittingMapHistory.Any())
+                {
+                    FittingMapHistory.Pop();
+                }
+
+                if (FullMapHistory.Any())
+                {
+                    FullMapHistory.Pop();
+                }
+
+                Field.FittingMap = FittingMapHistory.Any()
+                                       ? FittingMapHistory.Peek().ToArray()
+                                       : Field.EmptyMapX4();
+                Field.FullMap = FullMapHistory.Any()
+                                    ? FullMapHistory.Peek().ToArray()
+                                    : Field.EmptyMapX8();
             }
         }
 
