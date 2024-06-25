@@ -127,33 +127,6 @@ public class Solver
         return FiguresSet.ToList();
     }
 
-    private static void PrintIntResult(List<Figure> figuresSetWorking, int figureIteration)
-    {
-        var figureNumber = 13 - figuresSetWorking.Count;
-
-        Console.WriteLine($"{figureNumber}");
-
-        if (figureIteration % 100000 == 0)
-        {
-            Console.WriteLine($"Iteration: {figureIteration}",
-                              System.Drawing.Color.Gray);
-        }
-
-        switch (figureNumber)
-        {
-            case 12:
-                Console.WriteLine($"Iteration: {figureIteration} " +
-                                  $"Figures count:{figureNumber}",
-                                  System.Drawing.Color.MediumVioletRed);
-                break;
-            case 13:
-                Console.WriteLine($"Iteration: {figureIteration} " +
-                                  $"Figures count:{figureNumber}",
-                                  System.Drawing.Color.Yellow);
-                break;
-        }
-    }
-
     private void StepBack(List<Figure> figuresSetWorking)
     {
         if (FiguresFitHistory.Any() && FittingMapHistory.Any() && FullMapHistory.Any())
@@ -171,7 +144,30 @@ public class Solver
                             : Field.EmptyMapX8();
     }
 
-    public void PrintFinalResult()
+    private static void PrintIntResult(List<Figure> figuresSetWorking, int figureIteration)
+    {
+        var color = System.Drawing.Color.Gray;
+        var figureNumber = 13 - figuresSetWorking.Count;
+        // Console.WriteLine($"{figureNumber}");
+        if (figureIteration % 10000 == 0)
+        {
+            Console.WriteLine($"Iteration: {figureIteration}", color);
+        }
+
+        if (figureNumber >= 12)
+        {
+            color = figureNumber switch
+            {
+                12 => System.Drawing.Color.MediumVioletRed,
+                13 => System.Drawing.Color.Yellow,
+                _ => color
+            };
+            
+            Console.WriteLine($"Iteration: {figureIteration} Figure: {figureNumber}", color);
+        }
+    }
+
+    private void PrintFinalResult()
     {
         while (FiguresFitHistory.Any() && FittingMapHistory.Any())
         {

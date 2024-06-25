@@ -5,7 +5,7 @@ using Core;
 #endregion
 
 
-for (var i = 0; i < 1; i++)
+for (var i = 0; i < 20; i++)
 {
     var solver = new Solver();
     Task.Factory.StartNew(() => solver.Solve(SolveStrategy.StuckFromStart));
