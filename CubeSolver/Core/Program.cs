@@ -4,7 +4,12 @@ using Core;
 
 #endregion
 
-var solver = new Solver();
-solver.Solve();
 
+for (var i = 0; i < 1; i++)
+{
+    var solver = new Solver();
+    Task.Factory.StartNew(() => solver.Solve(SolveStrategy.StuckFromStart));
+}
+
+Console.ReadKey();
 Console.WriteLine("Exit");

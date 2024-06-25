@@ -7,6 +7,12 @@ using Console = Colorful.Console;
 
 namespace Core;
 
+public enum SolveStrategy
+{
+    StuckFromStart,
+    StuckStepBack
+}
+
 public class Solver
 {
     private Field Field { get; }
@@ -25,7 +31,7 @@ public class Solver
         FiguresSet = new List<Figure>(FiguresGenerator.GenerateFiguresSet());
     }
 
-    public void Solve()
+    public void Solve(SolveStrategy strategy)
     {
         var figureIteration = 0;
         var figureFitMapsEthalon = new List<int[]>();
@@ -47,6 +53,7 @@ public class Solver
         }
 
         var figuresSetWorking = FiguresSet.ToList();
+        var stepBackCounter = 0;
         while (figuresSetWorking.Any())
         {
             figureIteration++;
@@ -54,26 +61,7 @@ public class Solver
             var nextFigure = figuresSetWorking.ElementAt(rndIndex);
             figuresSetWorking.RemoveAt(rndIndex);
 
-            var figureNumber = 13 - figuresSetWorking.Count;
-
-            if (figureIteration % 100000 == 0)
-            {
-                Console.WriteLine($"Iteration: {figureIteration}",
-                                  System.Drawing.Color.Gray);
-            }
-            switch (figureNumber)
-            {
-                case 12:
-                    Console.WriteLine($"Iteration: {figureIteration} " +
-                                      $"Figures count:{figureNumber}",
-                                      System.Drawing.Color.MediumVioletRed);
-                    break;
-                case 13:
-                    Console.WriteLine($"Iteration: {figureIteration} " +
-                                      $"Figures count:{figureNumber}",
-                                      System.Drawing.Color.Yellow);
-                    break;
-            }
+            PrintIntResult(figuresSetWorking, figureIteration);
 
             var figureFitMaps = figureFitMapsEthalon.ToList();
             var fitted = false;
@@ -103,17 +91,84 @@ public class Solver
 
             if (!fitted) // not fitted after all rotates
             {
-                figuresSetWorking = FiguresSet.ToList();
+                switch (strategy)
+                {
+                    case SolveStrategy.StuckFromStart:
+                        figuresSetWorking = ResetToStart();
+                        break;
+                    case SolveStrategy.StuckStepBack:
+                        stepBackCounter++;
+                        figuresSetWorking.Add(nextFigure);
+                        StepBack(figuresSetWorking);
+                        if (stepBackCounter == figuresSetWorking.Count * 2) // doubleStepBack
+                        {
+                            stepBackCounter = 0;
+                            StepBack(figuresSetWorking);
+                        }
 
-                FiguresFitHistory.Clear();
-                FittingMapHistory.Clear();
-
-                Field.FittingMap = Field.EmptyMapX4();
-                Field.FullMap = Field.EmptyMapX8();
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(strategy), strategy, null);
+                }
             }
         }
 
         PrintFinalResult();
+    }
+
+    private List<Figure> ResetToStart()
+    {
+        FiguresFitHistory.Clear();
+        FittingMapHistory.Clear();
+
+        Field.FittingMap = Field.EmptyMapX4();
+        Field.FullMap = Field.EmptyMapX8();
+
+        return FiguresSet.ToList();
+    }
+
+    private static void PrintIntResult(List<Figure> figuresSetWorking, int figureIteration)
+    {
+        var figureNumber = 13 - figuresSetWorking.Count;
+
+        Console.WriteLine($"{figureNumber}");
+
+        if (figureIteration % 100000 == 0)
+        {
+            Console.WriteLine($"Iteration: {figureIteration}",
+                              System.Drawing.Color.Gray);
+        }
+
+        switch (figureNumber)
+        {
+            case 12:
+                Console.WriteLine($"Iteration: {figureIteration} " +
+                                  $"Figures count:{figureNumber}",
+                                  System.Drawing.Color.MediumVioletRed);
+                break;
+            case 13:
+                Console.WriteLine($"Iteration: {figureIteration} " +
+                                  $"Figures count:{figureNumber}",
+                                  System.Drawing.Color.Yellow);
+                break;
+        }
+    }
+
+    private void StepBack(List<Figure> figuresSetWorking)
+    {
+        if (FiguresFitHistory.Any() && FittingMapHistory.Any() && FullMapHistory.Any())
+        {
+            figuresSetWorking.Add(FiguresFitHistory.Pop());
+            FittingMapHistory.Pop();
+            FullMapHistory.Pop();
+        }
+
+        Field.FittingMap = FittingMapHistory.Any()
+                               ? FittingMapHistory.Peek().ToArray()
+                               : Field.EmptyMapX4();
+        Field.FullMap = FullMapHistory.Any()
+                            ? FullMapHistory.Peek().ToArray()
+                            : Field.EmptyMapX8();
     }
 
     public void PrintFinalResult()
